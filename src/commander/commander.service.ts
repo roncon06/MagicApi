@@ -8,7 +8,6 @@ import { DeckService } from 'src/deck/deck.service';
 
 @Injectable()
 export class CommanderService {
-  
   private readonly baseUrl = 'https://api.magicthegathering.io/v1';
 
   constructor(
@@ -16,26 +15,30 @@ export class CommanderService {
     private readonly deckService: DeckService
   ) {}
 
-
   // Buscar um comandante específico pelo nome
-  async getCommander(name: string): Promise<AxiosResponse<any>> {
+  async getCommander(name: string): Promise<any> {
     const url = `${this.baseUrl}/cards?name=${name}&types=creature&supertype=legendary`;
     const response = this.httpService.get(url);
     return await lastValueFrom(response);
   }
 
   // Buscar cartas baseadas nas cores do comandante
-  async getCardsForColors(colors: string[]): Promise<AxiosResponse<any>> {
+  async getCardsForColors(colors: string[]): Promise<any> {
     const colorQuery = colors.join(',');
     const url = `${this.baseUrl}/cards?colors=${colorQuery}&pageSize=99`;
     const response = this.httpService.get(url);
     return await lastValueFrom(response);
   }
 
-
+  // Função para criar e salvar um deck no MongoDB
   async createAndSaveDeck(commanderName: string, colors: string[], cards: any[]): Promise<any> {
-    // Salvar o deck no MongoDB
     return await this.deckService.saveDeck(commanderName, colors, cards);
   }
+
+    // Função para buscar todos os decks salvos
+    async getAllDecks(): Promise<any> {
+      return await this.deckService.getDecks();
+    }
   
+
 }

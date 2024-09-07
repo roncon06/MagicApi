@@ -17,4 +17,10 @@ export class DeckService {
     });
     return await createdDeck.save();
   }
+
+ // Buscar todos os decks salvos no banco de dados
+ async getDecks(): Promise<Deck[]> {
+  return this.deckModel.find().exec();
+}
+ 
 }

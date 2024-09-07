@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { MagicModule } from './magic/magic.module';
 import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { config } from 'dotenv';
@@ -15,7 +14,7 @@ config();
 @Module({
   imports: [ConfigModule.forRoot( {isGlobal: true} ),
     MongooseModule.forRoot(process.env.MONGODB_URL),
-    AuthModule, UsersModule, MagicModule, CommanderModule, DeckModule],
+    AuthModule, UsersModule, CommanderModule, DeckModule],
   controllers: [AppController],
   providers: [AppService],
 })
