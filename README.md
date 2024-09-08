@@ -39,7 +39,8 @@ npm run test:e2e
 ```
 Rodando teste de carga:
 ```bash
-npm run test:autocannon
+artillery run load-test.yml
+
 ```
 
 ## Documentação/Endpoints 📰
@@ -47,9 +48,6 @@ npm run test:autocannon
 Foi disponibilizado os arquivos de environment e collection da ferramenta [insomnia]contendo todos os endpoints feitos neste projeto.
 
 
-Também contamos com uma documentação feita pelo [swagger](https://swagger.io/) que está disponibilizada na seguinte rota da API:  
-
-http://localhost:3000/api
 
 
 
