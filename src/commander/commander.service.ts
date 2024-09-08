@@ -8,7 +8,7 @@ import { DeckService } from 'src/deck/deck.service';
 
 @Injectable()
 export class CommanderService {
-  private readonly baseUrl = 'https://api.magicthegathering.io/v1';
+  private readonly baseUrl = process.env.BASEURL;
 
   constructor(
     private readonly httpService: HttpService,

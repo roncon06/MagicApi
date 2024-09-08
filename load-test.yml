@@ -1,0 +1,14 @@
+config:
+  target: 'http://localhost:3000' # Substitua pelo endereço do seu servidor
+  phases:
+    - duration: 60
+      arrivalRate: 5
+    - duration: 60
+      arrivalRate: 10
+
+scenarios:
+  - flow:
+    - get:
+        url: "/commander/commanderName" # Substitua pelo nome real do comandante ou use um parâmetro variável
+    - get:
+        url: "/commander/decks/all"

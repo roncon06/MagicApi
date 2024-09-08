@@ -17,7 +17,7 @@ export class CommanderController {
   // Buscar o comandante pelo nome e criar o deck
   @Get(':commanderName')
   async createDeck(@Param('commanderName') commanderName: string) {
-    // Passo 1: Buscar o comandante
+    
     const commanderResponse = await this.commanderService.getCommander(commanderName);
     const commanderCard = commanderResponse.data.cards[0];
 
@@ -25,14 +25,11 @@ export class CommanderController {
       return { message: 'Comandante não encontrado.' };
     }
 
-    // Passo 2: Buscar as 99 cartas baseadas nas cores do comandante
     const colors = commanderCard.colors; // Cores do comandante
     const cardsResponse = await this.commanderService.getCardsForColors(colors);
 
-    // Passo 3: Combinar o comandante com as 99 cartas
     const deck = [commanderCard, ...cardsResponse.data.cards];
 
-    // Passo 4: Salvar o deck no MongoDB
     const savedDeck = await this.commanderService.createAndSaveDeck(commanderCard.name, colors, deck);
 
     return { message: 'Deck criado e salvo com sucesso!', savedDeck };
