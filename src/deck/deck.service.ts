@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Deck } from './schemas/deck.schema';
+import { lastValueFrom } from 'rxjs';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class DeckService {
@@ -13,14 +15,23 @@ export class DeckService {
     const createdDeck = new this.deckModel({
       commanderName,
       colors,
-      cards,
+      cards
     });
     return await createdDeck.save();
   }
+
+  
 
  // Buscar todos os decks salvos no banco de dados
  async getDecks(): Promise<Deck[]> {
   return this.deckModel.find().exec();
 }
+
+// Método para buscar decks por ID de usuário
+async getDecksByUser(userId: string): Promise<Deck[]> {
+  return await this.deckModel.find({ userId });
+}
+
+
  
 }

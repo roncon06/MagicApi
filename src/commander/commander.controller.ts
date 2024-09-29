@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
 import { CommanderService } from './commander.service';
 import { CreateCommanderDto } from './dto/create-commander.dto';
 import { UpdateCommanderDto } from './dto/update-commander.dto';
@@ -7,6 +7,9 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { Role } from 'src/roles/enums/role.enum';
 import { Roles } from 'src/roles/decorator.ts/role.decorator';
 import { RolesGuard } from 'src/roles/role.guard';
+import { CacheKey, CacheTTL } from '@nestjs/cache-manager';
+import { ImportDeckDto } from 'src/deck/dto/import-deck.dto';
+
 
 @Controller('commander')
 @UseGuards(AuthGuard, RolesGuard) 
@@ -16,8 +19,9 @@ export class CommanderController {
 
   // Buscar o comandante pelo nome e criar o deck
   @Get(':commanderName')
+  
   async createDeck(@Param('commanderName') commanderName: string) {
-    
+
     const commanderResponse = await this.commanderService.getCommander(commanderName);
     const commanderCard = commanderResponse.data.cards[0];
 
@@ -36,9 +40,30 @@ export class CommanderController {
   }
 
   // Buscar o deck salvo no banco de dados (por exemplo, por nome do comandante)
+
   @Get('decks/all')
+  @CacheKey('items') // chave para o cache
+  @CacheTTL(30)
   async getDeck() {
     const decks = await this.commanderService.getAllDecks(); // Implementaremos essa função para buscar os decks
     return decks;
   }
+
+
+   // Rota para importar um baralho
+   @Post('import')
+   async importDeck(@Body() importDeckDto: ImportDeckDto) {
+     const { commanderName, colors, cards } = importDeckDto;
+ 
+     // Validação das regras do Commander
+     const isValid = await this.commanderService.validateCommanderDeck(commanderName, colors, cards);
+     if (!isValid) {
+       return { message: 'O baralho não segue as regras do formato Commander.' };
+     }
+ 
+     // Se for válido, você pode salvar o deck no banco de dados
+     const savedDeck = await this.commanderService.createAndSaveDeck(commanderName, colors || [], cards);
+     return { message: 'Deck importado e salvo com sucesso!', savedDeck };
+   }
+  
 }

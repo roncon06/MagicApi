@@ -19,7 +19,7 @@ export class AuthService {
     const validUser = await this.validateUser(username, password);
   
     // Corrigindo o payload para pegar o role do usuário
-    const payload = { username: validUser.username, role: validUser.role };
+    const payload = {  username: validUser.username, role: validUser.role};
   
     return {
       access_token: this.jwtService.sign(payload),
@@ -34,7 +34,7 @@ export class AuthService {
         return {
           ...user,
           password: undefined,
-          role: user.role
+          role: user.role,
         };
       }
     }

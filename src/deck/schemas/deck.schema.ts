@@ -12,6 +12,8 @@ export class Deck extends Document {
 
   @Prop({ type: Array, default: [] })
   cards: any[];
+
+
 }
 
 export const DeckSchema = SchemaFactory.createForClass(Deck);

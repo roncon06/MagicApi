@@ -1,5 +1,12 @@
 ## TRABALHO DESAFIO PROFISSIONAL
 
+### Trabalho realizado por:
+
+- Lucas Roncon Goncalves - RA: 22014352-2
+- Vitoria Mendes - RA: 22137969-2
+- Anna Julia - RA: 22045748-2
+
+
 ## Pré-Requisitos
 - [Node.js](https://nodejs.org/)
 - [npm](https://www.npmjs.com/)
@@ -38,14 +45,7 @@ artillery run load-test.yml
 
 ## Documentação/Endpoints 📰
 
-<<<<<<< HEAD
 Foi disponibilizado os arquivos de environment e collection da ferramenta [insomnia]contendo todos os endpoints feitos neste projeto. 
-=======
-Foi disponibilizado os arquivos de environment e collection da ferramenta [insomnia]contendo todos os endpoints feitos neste projeto.
-
-
-
->>>>>>> ada9c8ff71db2f731f671df5a070e8f43dd380b1
 
 
 
