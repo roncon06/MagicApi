@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request, Inject } from '@nestjs/common';
 import { CommanderService } from './commander.service';
 import { CreateCommanderDto } from './dto/create-commander.dto';
 import { UpdateCommanderDto } from './dto/update-commander.dto';
@@ -9,13 +9,15 @@ import { Roles } from 'src/roles/decorator.ts/role.decorator';
 import { RolesGuard } from 'src/roles/role.guard';
 import { CacheKey, CacheTTL } from '@nestjs/cache-manager';
 import { ImportDeckDto } from 'src/deck/dto/import-deck.dto';
+import { ClientProxy } from '@nestjs/microservices';
 
 
 @Controller('commander')
 @UseGuards(AuthGuard, RolesGuard) 
 @Roles(Role.User, Role.Admin)
 export class CommanderController {
-  constructor(private readonly commanderService: CommanderService) {}
+  constructor(private readonly commanderService: CommanderService,
+  ) {}
 
   // Buscar o comandante pelo nome e criar o deck
   @Get(':commanderName')
@@ -55,11 +57,7 @@ export class CommanderController {
    async importDeck(@Body() importDeckDto: ImportDeckDto) {
      const { commanderName, colors, cards } = importDeckDto;
  
-     // Validação das regras do Commander
-     const isValid = await this.commanderService.validateCommanderDeck(commanderName, colors, cards);
-     if (!isValid) {
-       return { message: 'O baralho não segue as regras do formato Commander.' };
-     }
+  
  
      // Se for válido, você pode salvar o deck no banco de dados
      const savedDeck = await this.commanderService.createAndSaveDeck(commanderName, colors || [], cards);
