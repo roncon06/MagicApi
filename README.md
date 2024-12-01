@@ -42,6 +42,10 @@ Rodando teste de carga:
 artillery run load-test.yml
 
 ```
+## Teste de performance
+Foram realizados os testes de performance pelo Jmeter
+![alt text](<View Results Tree.jmx (C__Users_Usuario_Downloads_apache-jmeter-5.6.3_bin_View Results Tree.jmx) - Apache JMeter (5.6.3) 28_09_2024 22_23_01.png>)
+![alt text](<Aggregate Report.jmx (C__Users_Usuario_Downloads_apache-jmeter-5.6.3_bin_Aggregate Report.jmx) - Apache JMeter (5.6.3) 28_09_2024 23_17_50.png>)
 
 ## Documentação/Endpoints 📰
 
@@ -53,6 +57,7 @@ Foi disponibilizado os arquivos de environment e collection da ferramenta [insom
 
 **GET /commander/:commanderName**: Cria o deck com o comandante e suas cartas
 **GET /commander/decks/all**: Retornar todos os decks criado
+**POST /commander/import**: Importa um deck json
 
 ### User
 
