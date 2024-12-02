@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { AppError } from 'src/shared/utils/appError.exception';
+import { identity } from 'rxjs';
 
 @Injectable()
 export class UsersService {
@@ -22,7 +23,7 @@ export class UsersService {
     try {
       const data = {
         ...user,
-        password: bcrypt.hashSync(user.password, 10),
+        password: bcrypt.hashSync(user.password, 10)
       };
       const createdUser = await this.userModel.create(data);
       const { password, ...result } = createdUser.toJSON();
